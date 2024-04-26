@@ -7,7 +7,7 @@ def clear_keyboard():
 def main_keyboard():
     keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
     # or:
-    (keyboard.add('Відправити запит', 'Мої запити', row_width=2)
-           .add('Підтримка')
+    (keyboard.add('Відправити запит ❔', 'Мої запити 📝', row_width=2)
+           .add('Підтримка 💁‍♂️')
     )
     return keyboard
