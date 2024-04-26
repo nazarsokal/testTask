@@ -11,6 +11,7 @@ import Middleware
 import misc
 import tests
 
-from dispatcher import bot
+bot = AsyncTeleBot(config.TOKEN)
 
+print("Bot started")
 asyncio.run(bot.polling())
