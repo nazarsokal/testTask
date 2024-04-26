@@ -13,3 +13,6 @@ bot_config = config['BOT']
 TOKEN = bot_config['TOKEN']
 ID = bot_config['ID']
 USERNAME = bot_config['USERNAME']
+
+
+ASK_CHANNEL_ID = config['FEEDBACK']['ASK_CHANNEL_ID']
