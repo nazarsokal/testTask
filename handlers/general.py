@@ -28,7 +28,8 @@ async def send_welcome(message: Message):
 @bot.message_handler(state="*", commands=['cancel'])
 async def cancel(message: Message):
     await bot.delete_state(message.from_user.id, message.chat.id)
-    await bot.send_message(message.chat.id, "Дія була припинена")
+    await bot.send_message(message.chat.id, "Дія була припинена",
+                       reply_markup=main_keyboard())
             
             
 @bot.message_handler(text = "Мої запити 📝")

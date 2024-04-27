@@ -5,7 +5,7 @@ from database import DatabaseServiceClass
 
 import config
 
-db = DatabaseServiceClass()
+db = None# DatabaseServiceClass()
 state_storage = StateMemoryStorage()
 bot = AsyncTeleBot(config.TOKEN, state_storage=state_storage)
 

@@ -3,6 +3,7 @@ from telebot.types import Message
 from dispatcher import bot, db
 from keyboards.general import clear_keyboard, main_keyboard 
 from states.general import NewAnnouncementState
+from misc.announcements_method import format_announcements_block
 
 # @bot.message_handler()
 # async def process_query(message: Message):
@@ -12,15 +13,17 @@ from states.general import NewAnnouncementState
 
 @bot.message_handler(text = "Відправити запит ❔")
 async def handle_request(message: Message):
+    text = format_announcements_block(None, 0) + 'Введіть заголовок оголошенння:'
     await bot.set_state(message.from_user.id, NewAnnouncementState.title, message.chat.id)
-    await bot.send_message(message.chat.id, 'Введіть заголовок оголошенння:', reply_markup=clear_keyboard())
+    await bot.send_message(message.chat.id, text, reply_markup=clear_keyboard())
 
 @bot.message_handler(state=NewAnnouncementState.title)
-async def get_size(message):
-    title = message.text
-    
-    await bot.set_state(message.from_user.id, NewAnnouncementState.description, message.chat.id)
-    await bot.send_message(message.chat.id, 'Заголовок прийнято, тепер введіть опис')
-    
+async def get_size(message: Message):
     async with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
-        data['title'] = title
+        data['title'] = message.text
+        text = format_announcements_block(data, 1) + 'Заголовок прийнято, тепер введіть опис'
+        
+        
+        await bot.set_state(message.from_user.id, NewAnnouncementState.description, message.chat.id)
+        await bot.send_message(message.chat.id, text, reply_markup=clear_keyboard())
+    

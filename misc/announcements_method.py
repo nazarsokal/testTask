@@ -1,10 +1,10 @@
-from telebot.asyncio_storage.base_storage import StateContext
+
 from i18n import (NEW_ANNOUNCEMENTT_BLOCK,
                  NEW_ANNOUNCEMENTT_BLOCK_MISSING as NABM, 
                  NEW_ANNOUNCEMENTT_BLOCK_CURRENT as NABC,
                  NEW_ANNOUNCEMENTT_BLOCK_PRESENT as NABP
                 )
-def format_announcements_block(fsm_data: dict, current_state: int):
+def format_announcements_block(fsm_data: dict | None, current_state: int):
     if fsm_data is None: 
         fsm_data = {}
     
