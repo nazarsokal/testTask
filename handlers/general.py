@@ -49,7 +49,7 @@ async def send_welcome(message):
     await bot.reply_to(message, "Привіт! Я бот, щоб допомагати людям шукати допомогу",
                        reply_markup=main_keyboard())
   
-    await db.writeUser(message.from_user.id, message.from_user.username, message.from_user.first_name, message.from_user.last_name)
+    db.writeUser(message.from_user.id, message.from_user.username, message.from_user.first_name, message.from_user.last_name)
 
 @bot.message_handler(func=lambda message: message.text in ["Відправити запит ❔", "Мої запити 📝"])
 async def handle_query(message):

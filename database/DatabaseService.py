@@ -22,7 +22,7 @@ class DatabaseServiceClass:
                 ...
         except mysql.connector.Error as err:
             print("Error:", err)
-        self.close()
+        #self.close()
 
 
     def writeUser(self, userId, userNickName, userFirstName, userLastName):
@@ -35,12 +35,14 @@ class DatabaseServiceClass:
             val = (userId, userNickName, userFirstName, userLastName)
             self.dbCursor.execute(sqlInsert, val)
             self.dataBase.commit()
+            self.close()
 
     def writeUserAnnouncement(self, userID, userAnnounecement, photoID):
         sqlInsert = "INSERT INTO request_table (userID, userRequest, photoID) VALUES (%s, %s, %s)"
         sqlInsertValue = (userID, userAnnounecement, photoID)
         self.dbCursor.execute(sqlInsert, sqlInsertValue)
         self.dataBase.commit()
+        self.close()
         
     def close(self):
         self.dbCursor.close()
