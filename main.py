@@ -13,5 +13,5 @@ import tests
 
 from dispatcher import bot
 
-print("Bot started")
+print('<<Bot started>>')
 asyncio.run(bot.polling())

@@ -5,6 +5,8 @@ from dispatcher import ReplyKeyboardRemove
 from dispatcher import ReplyKeyboardMarkup
 from telebot.types import Message
 
+from keyboards.general import clear_keyboard, main_keyboard 
+
 # @bot.message_handler(commands=['start'])
 # async def send_welcome(message):
 #     await bot.reply_to(message, "Привіт! Я бот, щоб допомагати людям шукати допомогу")
@@ -40,7 +42,8 @@ def get_user_requests(chat_id):
 
 @bot.message_handler(commands=['start'])
 async def send_welcome(message):
-    await bot.reply_to(message, "Привіт! Я бот, щоб допомагати людям шукати допомогу")
+    await bot.reply_to(message, "Привіт! Я бот, щоб допомагати людям шукати допомогу",
+                       reply_markup=main_keyboard())
     db = DatabaseService.DatabaseServiceClass()
     await db.writeUser(message.from_user.id, message.from_user.username, message.from_user.first_name, message.from_user.last_name)
 
@@ -80,9 +83,4 @@ async def process_request(request, chat_id):
                 await bot.send_message(chat_id, request)
         else:
             await bot.send_message(chat_id, 'У вас немає запитів.')
-
-
-
-
-
 
