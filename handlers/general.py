@@ -1,8 +1,7 @@
 from database import DatabaseService
 from telebot.types import Message
-from dispatcher import bot
-from dispatcher import ReplyKeyboardRemove
-from dispatcher import ReplyKeyboardMarkup
+from dispatcher import bot, db
+
 from telebot.types import Message
 
 from keyboards.general import clear_keyboard, main_keyboard 
@@ -35,16 +34,21 @@ from keyboards.general import clear_keyboard, main_keyboard
 
 
 
-def get_user_requests(chat_id):
-    if chat_id not in user_requests:
-        user_requests[chat_id] = []
-    return user_requests[chat_id]
+# def get_user_requests(chat_id):
+#     if chat_id not in user_requests:
+#         user_requests[chat_id] = []
+#     return user_requests[chat_id]
+
+
+"""@bot.message_handler(commands=['send'])
+    bot.sendmessage(config.ASK_CHANNEL_ID, 'hfgdh')
+"""
 
 @bot.message_handler(commands=['start'])
 async def send_welcome(message):
     await bot.reply_to(message, "Привіт! Я бот, щоб допомагати людям шукати допомогу",
                        reply_markup=main_keyboard())
-    db = DatabaseService.DatabaseServiceClass()
+  
     await db.writeUser(message.from_user.id, message.from_user.username, message.from_user.first_name, message.from_user.last_name)
 
 @bot.message_handler(func=lambda message: message.text in ["Відправити запит ❔", "Мої запити 📝"])
@@ -62,25 +66,22 @@ async def handle_query(message):
 
 @bot.message_handler()
 async def process_query(message):
-    requests = get_user_requests(message.chat.id)
-    requests.append(message.text)
+    # requests = get_user_requests(message.chat.id)
+    # requests.append(message.text)
     await bot.send_message(message.chat.id, "Ваш запит був отриманий і буде оброблено.")
 
-user_requests = {}
+# user_requests = {}
 
 @bot.message_handler(func=lambda message: True)
 async def handle_message(message):
-    await process_request(message.text, message.chat.id)
-
-async def process_request(request, chat_id):
     if request == "Відправити запит ❔":
-        await bot.send_message(chat_id, 'Введіть ваш запит:')
+        await bot.send_message(message.chat_id, 'Введіть ваш запит:')
     elif request == "Мої запити 📝":
-        requests = get_user_requests(chat_id)
+        requests = get_user_requests(message.chat_id)
         if requests:
-            await bot.send_message(chat_id, 'Ваші запити:')
+            await bot.send_message(message.chat_id, 'Ваші запити:')
             for request in requests:
-                await bot.send_message(chat_id, request)
+                await bot.send_message(message.chat_id, request)
         else:
-            await bot.send_message(chat_id, 'У вас немає запитів.')
+            await bot.send_message(message.chat_id, 'У вас немає запитів.')
 

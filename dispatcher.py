@@ -1,7 +1,6 @@
 from telebot.async_telebot import AsyncTeleBot
-from telebot.types import ReplyKeyboardMarkup
-from telebot.types import ReplyKeyboardRemove
+from database import DatabaseServiceClass
 
 import config
-
+db = DatabaseServiceClass()
 bot = AsyncTeleBot(config.TOKEN)
