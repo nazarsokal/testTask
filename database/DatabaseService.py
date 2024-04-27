@@ -19,8 +19,9 @@ class DatabaseServiceClass:
         dataBase = mysql.connector.connect(
             host = dbConfig['HOST'],
             user = dbConfig['USER'],
+            port = dbConfig['PORT'],
             password = dbConfig['PASSWORD'],
-            database = dbConfig['DATABASE']
+            database = dbConfig['NAME']
         )
         dbCursor = dataBase.cursor()
 
@@ -38,7 +39,7 @@ class DatabaseServiceClass:
                     dbCursor.execute(sqlSelect, sqlVal)
                     selectResult = dbCursor.fetchall()
                     print(len(selectResult))
-                    
+
                     if len(selectResult) == 0:
                         sqlInsert = "INSERT INTO users_list (userID, userNickName, userFirstName, userLastName) VALUES (%s, %s, %s, %s)"
                         val = (userId, userNickName, userFirstName, userLastName)
