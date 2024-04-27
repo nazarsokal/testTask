@@ -31,7 +31,7 @@ async def cancel(message: Message):
     await bot.send_message(message.chat.id, "Дія була припинена")
             
             
-@bot.message_handler(func=lambda m: m.text == "Мої запити 📝")
+@bot.message_handler(text = "Мої запити 📝")
 async def my_requests(message: Message):
     requests = db.get_user_requests(message.chat.id)
     if requests:

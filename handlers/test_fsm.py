@@ -1,16 +1,16 @@
 import telebot # telebot
 
 from telebot import custom_filters
-from telebot.asyncio_handler_backends import State, StatesGroup #States
+from telebot.handler_backends import State, StatesGroup #States
 
 # States storage
-from telebot.asyncio_storage import StateMemoryStorage
+from telebot.storage import StateMemoryStorage
 
 
 # Now, you can pass storage to bot.
 state_storage = StateMemoryStorage() # you can init here another storage
 
-bot = telebot.TeleBot("<YOUR TOKEN HERE>", state_storage=state_storage)
+bot = telebot.TeleBot("7195089655:AAHVmMBUS-V_8Xm2Soz_z7GzBJ9VlIXmV9I", state_storage=state_storage)
 
 
 # States group.

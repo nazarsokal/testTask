@@ -10,18 +10,17 @@ from states.general import NewAnnouncementState
 #     # requests.append(message.text)
 #     await bot.send_message(message.chat.id, "Ваш запит був отриманий і буде оброблено.")
 
-@bot.message_handler(func=lambda m: m.text == "Відправити запит ❔")
+@bot.message_handler(text = "Відправити запит ❔")
 async def handle_request(message: Message):
+    await bot.set_state(message.from_user.id, NewAnnouncementState.title, message.chat.id)
     await bot.send_message(message.chat.id, 'Введіть заголовок оголошенння:', reply_markup=clear_keyboard())
 
 @bot.message_handler(state=NewAnnouncementState.title)
 async def get_size(message):
-    inp = message.text
-    if inp not in ["small", "large"]:
-        await bot.send_message(message.chat.id, 'Please enter "large" or "small".')
-        return
-    await bot.send_message(message.chat.id, 'How will you pay? Cash or paypal?')
-    await bot.set_state(message.from_user.id, NewAnnouncementState.descition, message.chat.id)
+    title = message.text
+    
+    await bot.set_state(message.from_user.id, NewAnnouncementState.description, message.chat.id)
+    await bot.send_message(message.chat.id, 'Заголовок прийнято, тепер введіть опис')
     
     async with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
-        data['size'] = inp
+        data['title'] = title

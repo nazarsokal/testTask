@@ -4,7 +4,7 @@ from i18n import (NEW_ANNOUNCEMENTT_BLOCK,
                  NEW_ANNOUNCEMENTT_BLOCK_CURRENT as NABC,
                  NEW_ANNOUNCEMENTT_BLOCK_PRESENT as NABP
                 )
-def format_announcements_block(data: StateContext):
+def format_announcements_block(data: dict):
     text = NEW_ANNOUNCEMENTT_BLOCK.format(
         title=data.get('title', NABM),
         description=data.get('description', NABC),
