@@ -1,7 +1,7 @@
 NEW_ANNOUNCEMENTT_BLOCK = '''\
 Ваш стан нового оголошення:
 Заголовок: <b>{title}</b>
-Опис: <u>{description}</u>
+Опис: <i>{description}</i>
 Фото: {photo}
 
 Для скасування дії відправте /cancel
