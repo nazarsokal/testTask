@@ -1,7 +1,7 @@
 from telebot.asyncio_handler_backends import State, StatesGroup
 
-class NewRequestState(StatesGroup):
+class NewAnnouncementState(StatesGroup):
     title = State() 
-    descition = State()
+    description = State()
     photo = State()
     confirm = State()
