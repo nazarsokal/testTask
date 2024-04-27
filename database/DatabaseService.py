@@ -26,20 +26,21 @@ class DatabaseServiceClass:
 
 
     def writeUser(self, userId, userNickName, userFirstName, userLastName):
-        
-                sqlSelect = "SELECT * FROM users_list WHERE userID = %s"
-                sqlVal = (str(userId), )
-                self.dbCursor.execute(sqlSelect, sqlVal)
-                selectResult = self.dbCursor.fetchall()
-                if len(selectResult) == 0:
-                    if userNickName == None:
-                        userNickName = "-"
-                    sqlInsert = "INSERT INTO users_list (userID, userNickName, userFirstName, userLastName) VALUES (%s, %s, %s, %s)"
-                    val = (userId, userNickName, userFirstName, userLastName)
-                    self.dbCursor.execute(sqlInsert, val)
-                    self.dataBase.commit()
+        sqlSelect = "SELECT * FROM users_list WHERE userID = %s"
+        sqlVal = (str(userId), )
+        self.dbCursor.execute(sqlSelect, sqlVal)
+        selectResult = self.dbCursor.fetchall()
+        if len(selectResult) == 0:
+            sqlInsert = "INSERT INTO users_list (userID, userNickName, userFirstName, userLastName) VALUES (%s, %s, %s, %s)"
+            val = (userId, userNickName, userFirstName, userLastName)
+            self.dbCursor.execute(sqlInsert, val)
+            self.dataBase.commit()
 
-
+    def writeUserRequest(self, userID, userRequest, photoID):
+        sqlInsert = "INSERT INTO request_table (userID, userRequest, photoID) VAKUES (%s, %s, %s)"
+        sqlInsertValue = (userID, userRequest, photoID)
+        self.dbCursor.execute(sqlInsert, sqlInsertValue)
+        self.dataBase.commit()
         
     def close(self):
         self.dbCursor.close()
