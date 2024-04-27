@@ -1,4 +1,4 @@
-
+# from telebot.formatting import apply_html_entities
 from i18n import (NEW_ANNOUNCEMENTT_BLOCK,
                  NEW_ANNOUNCEMENTT_BLOCK_MISSING as NABM, 
                  NEW_ANNOUNCEMENTT_BLOCK_CURRENT as NABC,

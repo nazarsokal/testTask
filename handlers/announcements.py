@@ -14,7 +14,7 @@ from misc.announcements_method import format_announcements_block
 @bot.message_handler(text = "Відправити запит ❔")
 async def handle_request(message: Message):
     await bot.set_state(message.from_user.id, NewAnnouncementState.title, message.chat.id)
-    await bot.send_message(message.chat.id, format_announcements_block(None, 0), reply_markup=clear_keyboard())
+    await bot.send_message(message.chat.id, format_announcements_block(None, 0), reply_markup=clear_keyboard(), parse_mode='HTML')
     await bot.send_message(message.chat.id, 'Ропочнемо! Спершу введіть заголовок оголошенння:', reply_markup=clear_keyboard())
 
 @bot.message_handler(state=NewAnnouncementState.title)
@@ -23,6 +23,6 @@ async def get_size(message: Message):
         data['title'] = message.text
        
         await bot.set_state(message.from_user.id, NewAnnouncementState.description, message.chat.id)
-        await bot.send_message(message.chat.id, format_announcements_block(data, 1), reply_markup=clear_keyboard())
+        await bot.send_message(message.chat.id, format_announcements_block(data, 1), reply_markup=clear_keyboard(), parse_mode='HTML')
         await bot.send_message(message.chat.id, 'Заголовок прийнято! Тепер введіть опис', reply_markup=clear_keyboard())
     
