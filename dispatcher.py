@@ -7,7 +7,7 @@ import config
 
 db = DatabaseServiceClass()
 state_storage = StateMemoryStorage()
-bot = AsyncTeleBot(config.TOKEN, state_storage=state_storage)
+bot = AsyncTeleBot(config.TOKEN, state_storage=state_storage, parse_mode='HTML')
 
 bot.add_custom_filter(asyncio_filters.StateFilter(bot))
 bot.add_custom_filter(asyncio_filters.TextMatchFilter())
