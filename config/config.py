@@ -1,5 +1,5 @@
 import configparser
-
+import mysql.connector
 # class ConfigManager:
 #     def __init__(self) -> None:
 #         self.config = configparser.ConfigParser()

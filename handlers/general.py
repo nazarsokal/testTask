@@ -1,4 +1,5 @@
 from database import DatabaseService
+from telebot.types import Message
 from dispatcher import bot
 
 @bot.message_handler(commands=['start'])
