@@ -23,8 +23,9 @@ async def handle_announcements(message: Message):
 async def get_title(message: Message):
     async with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
         data['title'] = message.text
-       
+
         await bot.set_state(message.from_user.id, NewAnnouncementState.body, message.chat.id)
+
         await bot.send_message(message.chat.id, format_announcements_block(data, 1), reply_markup=clear_keyboard())
         await bot.send_message(message.chat.id, 'Заголовок прийнято! Тепер введіть тіло', reply_markup=clear_keyboard())
     
@@ -72,6 +73,7 @@ async def callbackMessage(callback: CallbackQuery):
             
         await bot.send_message(callback.from_user.id, "Оголошення успішно відправлено на канал")
 
+
 @bot.callback_query_handler(state=NewAnnouncementState.confirm, func=lambda callback: callback.data == "announcement_cancle")
 async def cancel(callback: CallbackQuery):
     await bot.edit_message_reply_markup(callback.message.chat.id, callback.message.id)
@@ -79,3 +81,4 @@ async def cancel(callback: CallbackQuery):
     await bot.send_message(callback.message.chat.id, "Оголошення скасовано",
                        reply_markup=main_keyboard())
     await bot.answer_callback_query(callback.id)
+
