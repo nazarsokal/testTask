@@ -8,12 +8,5 @@ import mysql.connector
 config = configparser.ConfigParser()
 config.read('config/config.ini')
 
-bot_config = config['BOT']
-
-TOKEN = bot_config['TOKEN']
-ID = bot_config['ID']
-USERNAME = bot_config['USERNAME']
-
-
-
+TOKEN = config['BOT']['TOKEN']
 ANNOUNCEMENT_CHANNEL_ID = config['FEEDBACK']['ANNOUNCEMENT_CHANNEL_ID']
