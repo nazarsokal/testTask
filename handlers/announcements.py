@@ -71,3 +71,11 @@ async def callbackMessage(callback: CallbackQuery):
         #                          )
             
         await bot.send_message(callback.from_user.id, "Оголошення успішно відправлено на канал")
+
+@bot.callback_query_handler(state=NewAnnouncementState.confirm, func=lambda callback: callback.data == "announcement_cancle")
+async def cancel(callback: CallbackQuery):
+    await bot.edit_message_reply_markup(callback.message.chat.id, callback.message.id)
+    await bot.delete_state(callback.from_user.id, callback.message.chat.id)
+    await bot.send_message(callback.message.chat.id, "Оголошення скасовано",
+                       reply_markup=main_keyboard())
+    await bot.answer_callback_query(callback.id)
