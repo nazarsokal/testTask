@@ -81,4 +81,3 @@ async def cancel(callback: CallbackQuery):
     await bot.send_message(callback.message.chat.id, "Оголошення скасовано",
                        reply_markup=main_keyboard())
     await bot.answer_callback_query(callback.id)
-
