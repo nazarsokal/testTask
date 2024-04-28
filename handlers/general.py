@@ -41,3 +41,4 @@ async def my_requests(message: Message):
             await bot.send_message(message.chat.id, request)
     else:
         await bot.send_message(message.chat.id, 'У вас немає запитів.')
+#назар лох
