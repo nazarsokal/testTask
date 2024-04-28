@@ -6,7 +6,7 @@ Clone repo
 
 ```
 git clone https://github.com/nazarsokal/testTask.git
-cd testTask
+cd testTask/
 ```
 
 Install dependencies
