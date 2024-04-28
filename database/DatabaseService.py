@@ -39,7 +39,7 @@ class DatabaseServiceClass:
             self.close()
 
     def writeUserAnnouncement(self, userID, messageID, userAnnounecementTitle ,userAnnounecementBody, photoID):
-        sqlInsert = "INSERT INTO announcement_table (userID, messageID, userAnnounecementTitle ,userAnnounecementBody, photoID) VALUES (%s, %s, %s, %s, %s)"
+        sqlInsert = "INSERT INTO announcement_table (userID, messageID, userAnnouncementTitle ,userAnnouncementBody, photoID) VALUES (%s, %s, %s, %s, %s)"
         sqlInsertValue = (userID, messageID, userAnnounecementTitle, userAnnounecementBody, photoID)
         self.dbCursor.execute(sqlInsert, sqlInsertValue)
         self.dataBase.commit()
@@ -50,6 +50,7 @@ class DatabaseServiceClass:
         sqlVal = (userID)
         self.dbCursor.execute(sqlSelectAnnouncement, sqlVal)
         selectAnnResult = self.dbCursor.fetchall()
+        self.close()
         return selectAnnResult
 
     def close(self):
