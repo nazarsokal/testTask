@@ -48,3 +48,5 @@ class DatabaseServiceClass:
         self.dbCursor.close()
         self.dataBase.close()
         
+    #назар лох
+        
