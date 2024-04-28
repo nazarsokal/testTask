@@ -52,8 +52,8 @@ async def help_message(message: Message):
     markup = types.InlineKeyboardMarkup()
     btn1 =  types.InlineKeyboardButton("Підтримка ДопомогаUA💁‍♂️", url="https://t.me/+bM_8FTZBDGUyNzcy")
     btn2 =  types.InlineKeyboardButton("ДопомогаUA", url="https://t.me/KRKtest")
-    await markup.add(btn1)
-    await markup.add(btn2)
+    markup.add(btn1)
+    markup.add(btn2)
     await bot.send_message(message.chat.id,"КОрисні посилання:", reply_markup=markup)
 
     
