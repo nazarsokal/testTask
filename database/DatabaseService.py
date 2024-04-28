@@ -50,7 +50,7 @@ class DatabaseServiceClass:
         self.close()
     
     def get_user_requests(self, userID):
-        sqlSelectAnnouncement = "SELECT * FROM announcement_table (userID, messageID, userAnnouncementTitle ,userAnnouncementBody, photoID, isClosed) WHERE userID = %s"
+        sqlSelectAnnouncement = "SELECT * FROM announcement_table WHERE userID = %s"
         sqlVal = (userID)
         self.dbCursor.execute(sqlSelectAnnouncement, sqlVal)
         selectAnnResult = self.dbCursor.fetchall()
