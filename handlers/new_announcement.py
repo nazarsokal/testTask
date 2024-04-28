@@ -48,7 +48,6 @@ async def get_photo(message: Message):
             
         await bot.set_state(message.from_user.id, NewAnnouncementState.confirm, message.chat.id)
         await bot.send_message(message.chat.id, 'Що робити з публікацею?', reply_markup=announcement_confirm_markup())
-        print(data)
         
     
 @bot.callback_query_handler(state=NewAnnouncementState.confirm, func=lambda callback: callback.data == "announcement_confirm")
