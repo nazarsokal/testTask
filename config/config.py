@@ -1,19 +1,10 @@
 import configparser
-import mysql.connector
-# class ConfigManager:
-#     def __init__(self) -> None:
-#         self.config = configparser.ConfigParser()
-#         self.config.read('config/config.ini')
     
 config = configparser.ConfigParser()
 config.read('config/config.ini')
 
-bot_config = config['BOT']
+TOKEN = config['BOT']['TOKEN']
 
-TOKEN = bot_config['TOKEN']
-ID = bot_config['ID']
-USERNAME = bot_config['USERNAME']
-
-
-
-ANNOUNCEMENT_CHANNEL_ID = config['FEEDBACK']['ANNOUNCEMENT_CHANNEL_ID']
+ANNOUNCEMENT_CHANNEL_ID = config['CHATS']['ANNOUNCEMENT_CHANNEL_ID']
+ANNOUNCEMENT_CHANNEL_LINK = config['CHATS']['ANNOUNCEMENT_CHANNEL_LINK']
+SUPPORT_GROUP_LINK = config['CHATS']['SUPPORT_GROUP_LINK']
