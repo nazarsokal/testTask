@@ -43,14 +43,14 @@ class DatabaseServiceClass:
                               userAnnounecementTitle: str,
                               userAnnounecementBody: str,
                               photoID: str | None):
-        sqlInsert = "INSERT INTO announcement_table (userID, messageID, userAnnouncementTitle ,userAnnouncementBody, photoID) VALUES (%s, %s, %s, %s, %s)"
-        sqlInsertValue = (userID, messageID, userAnnounecementTitle, userAnnounecementBody, photoID)
+        sqlInsert = "INSERT INTO announcement_table (userID, messageID, userAnnouncementTitle ,userAnnouncementBody, photoID, isClosed) VALUES (%s, %s, %s, %s, %s)"
+        sqlInsertValue = (userID, messageID, userAnnounecementTitle, userAnnounecementBody, photoID, False)
         self.dbCursor.execute(sqlInsert, sqlInsertValue)
         self.dataBase.commit()
         self.close()
     
     def get_user_requests(self, userID):
-        sqlSelectAnnouncement = "SELECT * FROM announcement_table (userID, messageID, userAnnounecementTitle ,userAnnounecementBody, photoID) WHERE userID = %s"
+        sqlSelectAnnouncement = "SELECT * FROM announcement_table (userID, messageID, userAnnouncementTitle ,userAnnouncementBody, photoID, isClosed) WHERE userID = %s"
         sqlVal = (userID)
         self.dbCursor.execute(sqlSelectAnnouncement, sqlVal)
         selectAnnResult = self.dbCursor.fetchall()
