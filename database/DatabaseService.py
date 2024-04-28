@@ -59,12 +59,20 @@ class DatabaseServiceClass:
         self.close()
         return selectAnnResult
     
-    def get_Title_Body(self):
-        sqlSelectAnnouncement = "SELECT userAnnouncementTitle, userAnnouncementBody FROM announcement_table WHERE userID = %s"
-        self.dbCursor.execute(sqlSelectAnnouncement)
+    def get_Title_Body(self, userID):
+        sqlSelectAnnouncement = "SELECT userAnnouncementTitle, userAnnouncementBody, photoID FROM announcement_table WHERE userID = %s"
+        sqlVal = (userID, )
+        self.dbCursor.execute(sqlSelectAnnouncement, sqlVal)
         selectAnnResult = self.dbCursor.fetchall()
         self.close()
         return selectAnnResult
+    
+    def closeFundraisng(self, userID, booleanStatement: bool):
+        sqlUpdate = "UPDATE announcement_table SET isClosed = %s WHERE userID = %s"
+        sqlVal = (booleanStatement, userID)
+        self.dbCursor.execute(sqlUpdate, sqlVal)
+        self.dataBase.commit()
+        self.close()
     
 
     def close(self):
