@@ -1,47 +1,27 @@
 from telebot.types import User
-import mysql.connector
-import config
-import configparser
 import sqlite3
  
 class DatabaseServiceClass:
-    
     def __init__(self):
-        dbConfig = config.config['DB']
-        # self.dataBase = mysql.connector.connect(
-        #     host = dbConfig['HOST'],
-        #     user = dbConfig['USER'],
-        #     port = dbConfig['PORT'],
-        #     password = dbConfig['PASSWORD'],
-        #     database = dbConfig['NAME']
-        # )
-        # self.dbCursor = self.dataBase.cursor()
+
         self.dataBase = sqlite3.connect('database\\database.db')
         self.dbCursor = self.dataBase.cursor()
 
         self.dbCursor.execute("CREATE TABLE IF NOT EXISTS users_list (userID VARCHAR(255), userNickName VARCHAR(255), userFirstName VARCHAR(255), userLastName VARCHAR(255))")
         self.dbCursor.execute("CREATE TABLE IF NOT EXISTS announcement_table (userID VARCHAR(255), messageID VARCHAR(255), userAnnouncementTitle VARCHAR(255), userAnnouncementBody TEXT, photoID VARCHAR(255), isClosed TINYINT(1) DEFAULT '0')")
-        # try:
-        #     if not self.dataBase.():
-        #         print("Error connecting to database")
-        #     else:
-        #         ...
-        # except mysql.connector.Error as err:
-        #     print("Error:", err)
-        #self.close()
-
 
     def writeUser(self, user : User):
         sqlSelect = "SELECT * FROM users_list WHERE userID = ?"
         sqlVal = (str(user.id), )
         self.dbCursor.execute(sqlSelect, sqlVal)
         selectResult = self.dbCursor.fetchall()
-        if len(selectResult) == 0:
-            sqlInsert = "INSERT INTO users_list (userID, userNickName, userFirstName, userLastName) VALUES (?, ?, ?, ?)"
-            val = (user.id, user.username, user.first_name, user.last_name)
-            self.dbCursor.execute(sqlInsert, val)
-            self.dataBase.commit()
-            # self.close()
+        if len(selectResult):
+            return
+        
+        sqlInsert = "INSERT INTO users_list (userID, userNickName, userFirstName, userLastName) VALUES (?, ?, ?, ?)"
+        val = (user.id, user.username, user.first_name, user.last_name)
+        self.dbCursor.execute(sqlInsert, val)
+        self.dataBase.commit()
 
     def writeUserAnnouncement(self, userID: int,
                               messageID: int,
@@ -52,7 +32,6 @@ class DatabaseServiceClass:
         sqlInsertValue = (userID, messageID, userAnnounecementTitle, userAnnounecementBody, photoID, False)
         self.dbCursor.execute(sqlInsert, sqlInsertValue)
         self.dataBase.commit()
-        # self.close()
     
     def get_user_requests(self, userID) -> list[dict]:
         sqlSelectAnnouncement = "SELECT userID, messageID, userAnnouncementTitle ,userAnnouncementBody, photoID, isClosed FROM announcement_table WHERE userID = ?"
@@ -67,24 +46,7 @@ class DatabaseServiceClass:
             "photo":dt[4],
             "isClosed":dt[5],
         } for dt in selectAnnResult]
-        # self.close()
         return result
-    
-    def get_Title_Body(self, userID) -> list[dict]:
-        sqlSelectAnnouncement = "SELECT userAnnouncementTitle, userAnnouncementBody, photoID FROM announcement_table WHERE messageID = ?"
-        sqlVal = (userID, )
-        self.dbCursor.execute(sqlSelectAnnouncement, sqlVal)
-        selectAnnResult = self.dbCursor.fetchall()
-        # self.close()
-        return selectAnnResult
-    
-    def closeFundraisng(self, userID, booleanStatement: bool):
-        sqlUpdate = "UPDATE announcement_table SET isClosed = ? WHERE messageID = ?"
-        sqlVal = (booleanStatement, userID)
-        self.dbCursor.execute(sqlUpdate, sqlVal)
-        self.dataBase.commit()
-        # self.close()
-    
 
     def close(self):
         self.dbCursor.close()

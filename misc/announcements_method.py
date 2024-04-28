@@ -26,11 +26,8 @@ def format_announcements_block(fsm_data: dict | None, current_state: int):
     )
     return text
 
-def make_announcement_text(data: dict):
-    return f"<b>{data['title']}</b>\n<i>{data['body']}</i>"
-
 async def send_announcement(bot: AsyncTeleBot, chat_id: int | str, data: dict, **kwargs) -> Message:
-    text = make_announcement_text(data)
+    text = f"<b>{data['title']}</b>\n<i>{data['body']}</i>"
     if data['photo']:
         message = await bot.send_photo(chat_id, data['photo'], text, **kwargs)
     else:
