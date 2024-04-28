@@ -16,10 +16,19 @@ def main_keyboard():
     
     return keyboard
 
-def announcement_confirm():
+def announcement_confirm_markup():
     keyboard = InlineKeyboardMarkup()
     btn1 =  InlineKeyboardButton("Опублікувати", callback_data="announcement_confirm")
     btn2 =  InlineKeyboardButton("Скасувати", callback_data="announcement_cancle")
     keyboard.row(btn1, btn2)
     return keyboard
     
+def all_chanels_markup():
+    markup = InlineKeyboardMarkup()
+    btn1 =  InlineKeyboardButton("Підтримка ДопомогаUA💁‍♂️", url="https://t.me/+bM_8FTZBDGUyNzcy")
+    btn2 =  InlineKeyboardButton("ДопомогаUA", url="https://t.me/KRKtest")
+    markup.add(btn1)
+    markup.add(btn2)
+    return markup
+
+def 
