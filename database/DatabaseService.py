@@ -49,7 +49,7 @@ class DatabaseServiceClass:
         self.dataBase.commit()
         self.close()
     
-    def get_user_requests(self, userID):
+    def get_user_requests(self, userID) -> list[dict]:
         sqlSelectAnnouncement = "SELECT * FROM announcement_table WHERE userID = %s"
         sqlVal = (userID, )
         self.dbCursor.execute(sqlSelectAnnouncement, sqlVal)

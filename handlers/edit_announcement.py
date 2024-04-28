@@ -1,6 +1,6 @@
 from telebot.types import Message
 
-from keyboards.general import main_keyboard, all_chanels_markup
+from keyboards.general import close_open_announcement_markup
 from misc.announcements_method import send_announcement
 from dispatcher import bot, db
 
@@ -10,7 +10,7 @@ async def my_requests(message: Message):
     if requests:
         await bot.send_message(message.chat.id, 'Ваші запити:')
         for request in requests:
-            qwery = f'{message.from_user.id}.{request}'
-            await send_announcement(bot, message.chat.id, request)
+            markup = close_open_announcement_markup(request)
+            await send_announcement(bot, message.chat.id, request, reply_markup=markup)
     else:
         await bot.send_message(message.chat.id, 'У вас немає запитів')

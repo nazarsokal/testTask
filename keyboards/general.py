@@ -4,6 +4,7 @@ from telebot.types import (ReplyKeyboardMarkup,
                            InlineKeyboardButton,
                            ReplyKeyboardRemove
                            )
+from telebot.types import Message
 
 
 def clear_keyboard():
@@ -17,11 +18,11 @@ def main_keyboard():
     return keyboard
 
 def announcement_confirm_markup():
-    keyboard = InlineKeyboardMarkup()
+    markup = InlineKeyboardMarkup()
     btn1 =  InlineKeyboardButton("Опублікувати", callback_data="announcement_confirm")
     btn2 =  InlineKeyboardButton("Скасувати", callback_data="announcement_cancle")
-    keyboard.row(btn1, btn2)
-    return keyboard
+    markup.row(btn1, btn2)
+    return markup
     
 def all_chanels_markup():
     markup = InlineKeyboardMarkup()
@@ -31,4 +32,11 @@ def all_chanels_markup():
     markup.add(btn2)
     return markup
 
-def 
+def close_open_announcement_markup(request: dict):
+    qwery = f"{request['userID']}.{request}"
+    text = 'Відновити' if request['isClosed'] else 'Закрити'
+    
+    markup = InlineKeyboardMarkup()
+    btn1 =  InlineKeyboardButton(text, callback_data=qwery)
+    markup.add(btn1)
+    return markup
