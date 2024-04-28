@@ -1,3 +1,4 @@
 from . import admin
 from . import general
-from . import announcements
+from . import new_announcement
+from . import edit_announcement
