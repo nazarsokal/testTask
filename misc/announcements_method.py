@@ -8,10 +8,11 @@ def format_announcements_block(fsm_data: dict | None, current_state: int):
     if fsm_data is None: 
         fsm_data = {}
     
+    params = ['title', 'body', 'photo']
+    
     data = [
-        fsm_data.get('title', NABM),
-        fsm_data.get('body', NABM),
-        (NABM, NABP)[fsm_data.get('photo', False)] 
+        NABP if fsm_data.get(param) else NABM
+        for param in params
     ]
     data[current_state] = NABC
     

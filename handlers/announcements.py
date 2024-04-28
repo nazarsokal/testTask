@@ -14,6 +14,7 @@ from misc.announcements_method import format_announcements_block
 
 @bot.message_handler(text = "Відправити запит ❔")
 async def handle_announcements(message: Message):
+    await bot.delete_state(message.from_user.id, message.chat.id)
     await bot.set_state(message.from_user.id, NewAnnouncementState.title, message.chat.id)
     await bot.send_message(message.chat.id, format_announcements_block(None, 0), reply_markup=clear_keyboard())
     await bot.send_message(message.chat.id, 'Ропочнемо! Спершу введіть заголовок оголошенння:', reply_markup=clear_keyboard())
@@ -54,7 +55,7 @@ async def get_photo(message: Message):
         print(data)
         
     
-@bot.callback_query_handler(state=NewAnnouncementState.confirm, func=lambda callback: callback.data == "YES")
+@bot.callback_query_handler(state=NewAnnouncementState.confirm, func=lambda callback: callback.data == "announcement_confirm")
 async def callbackMessage(callback: CallbackQuery):
     async with bot.retrieve_data(callback.from_user.id, callback.from_user.id) as data:     
         text = f"<b>{data['title']}</b>\n<i>{data['body']}</i>"
@@ -62,11 +63,11 @@ async def callbackMessage(callback: CallbackQuery):
             post = await bot.send_photo(config.ANNOUNCEMENT_CHANNEL_ID, data['photo'], text)
         else:
             post = await bot.send_message(config.ANNOUNCEMENT_CHANNEL_ID, text)
-        db.writeUserAnnouncement(callback.from_user.id,
-                                 post.chat.id,
-                                 data['title'],
-                                 data['body'],
-                                 data['photo']
-                                 )
+        # db.writeUserAnnouncement(callback.from_user.id,
+        #                          post.chat.id,
+        #                          data['title'],
+        #                          data['body'],
+        #                          data['photo']
+        #                          )
             
         await bot.send_message(callback.from_user.id, "Оголошення успішно відправлено на канал")
