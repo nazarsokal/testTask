@@ -21,7 +21,6 @@ async def handle_announcements(message: Message):
 async def get_title(message: Message):
     async with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
         data['title'] = message.text
-       
         await bot.set_state(message.from_user.id, NewAnnouncementState.description, message.chat.id)
         await bot.send_message(message.chat.id, format_announcements_block(data, 1), reply_markup=clear_keyboard())
         await bot.send_message(message.chat.id, 'Заголовок прийнято! Тепер введіть опис', reply_markup=clear_keyboard())
