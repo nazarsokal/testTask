@@ -1,4 +1,4 @@
-from telebot.types import Message
+from telebot.types import Message, User
 
 from dispatcher import bot, db
 from keyboards.general import clear_keyboard, main_keyboard 
@@ -22,7 +22,7 @@ async def send_welcome(message: Message):
                        reply_markup=main_keyboard())
     
     # ! needed to edit!
-    db.writeUser(message.from_user.id, message.from_user.username, message.from_user.first_name, message.from_user.last_name)
+    db.writeUser(message.from_user)
 
 
 @bot.message_handler(state="*", commands=['cancel'])

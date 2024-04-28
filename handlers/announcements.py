@@ -52,3 +52,4 @@ async def get_photo(message: Message):
         await bot.send_message(message.chat.id, 'Тепер підтвердіть публікацію /confirm, або скасуйте /cancle', reply_markup=clear_keyboard())
 
         print(data)
+        

@@ -1,3 +1,4 @@
+from telebot.types import User
 import mysql.connector
 import config
 import configparser
@@ -25,25 +26,32 @@ class DatabaseServiceClass:
         #self.close()
 
 
-    def writeUser(self, userId, userNickName, userFirstName, userLastName):
+    def writeUser(self, user : User):
         sqlSelect = "SELECT * FROM users_list WHERE userID = %s"
-        sqlVal = (str(userId), )
+        sqlVal = (str(user.id), )
         self.dbCursor.execute(sqlSelect, sqlVal)
         selectResult = self.dbCursor.fetchall()
         if len(selectResult) == 0:
             sqlInsert = "INSERT INTO users_list (userID, userNickName, userFirstName, userLastName) VALUES (%s, %s, %s, %s)"
-            val = (userId, userNickName, userFirstName, userLastName)
+            val = (user.id, user.username, user.first_name, user.last_name)
             self.dbCursor.execute(sqlInsert, val)
             self.dataBase.commit()
             self.close()
 
-    def writeUserAnnouncement(self, userID, messageID, userAnnounecementTitle ,userAnnounecement, photoID):
-        sqlInsert = "INSERT INTO request_table (userID, messageID, userAnnounecementTitle ,userRequest, photoID) VALUES (%s, %s, %s, %s, %s)"
-        sqlInsertValue = (userID, messageID, userAnnounecementTitle, userAnnounecement, photoID)
+    def writeUserAnnouncement(self, userID, messageID, userAnnounecementTitle ,userAnnounecementBody, photoID):
+        sqlInsert = "INSERT INTO announcement_table (userID, messageID, userAnnounecementTitle ,userAnnounecementBody, photoID) VALUES (%s, %s, %s, %s, %s)"
+        sqlInsertValue = (userID, messageID, userAnnounecementTitle, userAnnounecementBody, photoID)
         self.dbCursor.execute(sqlInsert, sqlInsertValue)
         self.dataBase.commit()
         self.close()
-        
+    
+    def get_user_requests(self, userID):
+        sqlSelectAnnouncement = "SELECT * FROM announcement_table (userID, messageID, userAnnounecementTitle ,userAnnounecementBody, photoID) WHERE userID = %s"
+        sqlVal = (userID)
+        self.dbCursor.execute(sqlSelectAnnouncement, sqlVal)
+        selectAnnResult = self.dbCursor.fetchall()
+        return selectAnnResult
+
     def close(self):
         self.dbCursor.close()
         self.dataBase.close()
