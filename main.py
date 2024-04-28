@@ -1,15 +1,6 @@
-import asyncio
-
-import config
-import database
-import handlers
-import i18n
-import keyboards
-import Middleware
-import misc
-import tests
-
 from dispatcher import bot
+import handlers
+import asyncio
 
 print('<<Bot started>>')
 asyncio.run(bot.polling())
