@@ -1,8 +1,10 @@
 from telebot.types import Message
-from telebot import types
-from dispatcher import bot, db
-from keyboards.general import clear_keyboard, main_keyboard 
 
+from telebot import types
+
+from keyboards.general import clear_keyboard, main_keyboard 
+from states.general import NewAnnouncementState
+from dispatcher import bot, db
 from i18n import START_MESSAGE
 
 
@@ -41,7 +43,9 @@ async def my_requests(message: Message):
             await bot.send_message(message.chat.id, request)
     else:
         await bot.send_message(message.chat.id, 'У вас немає запитів.')
-        
+
+#купіть слона
+    
 
 @bot.message_handler(text = "Підтримка 💁‍♂️")
 async def help_message(message: Message):
@@ -52,8 +56,5 @@ async def help_message(message: Message):
     await markup.add(btn2)
     await bot.send_message(message.chat.id,"КОрисні посилання:", reply_markup=markup)
 
-    
-    
-    
     
     
