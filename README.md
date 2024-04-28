@@ -39,3 +39,14 @@ https://t.me/KRKtest
 
 
 Після взаємодії з полем "Підтримка 💁‍♂️" користувачу відправляється повідомлення, яке містить посилання на два телеграм канали "ДопомогаUA", у який бот відправляє запити користувачів та "Підтримка ДопомогаUA", який призначений для вирішення питань з роботою бота.
+
+
+## Credits
+
+[FiremanC4](https://github.com/FiremanC4)  |  [@FiremanC4](https://t.me/FiremanC4)
+
+[nazarsokal](https://github.com/nazarsokal)  |  [@prepodobnuy_harlampiy](https://t.me/prepodobnuy_harlampiy)
+
+[NazarNovosilets](https://github.com/NazarNovosilets)  |  [@nnovosilets](https://t.me/nnovosilets)
+
+[gycone1234](github.com/gycone1234)  |
