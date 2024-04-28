@@ -37,9 +37,9 @@ class DatabaseServiceClass:
             self.dataBase.commit()
             self.close()
 
-    def writeUserAnnouncement(self, userID, userAnnounecement, photoID):
-        sqlInsert = "INSERT INTO request_table (userID, userRequest, photoID) VALUES (%s, %s, %s)"
-        sqlInsertValue = (userID, userAnnounecement, photoID)
+    def writeUserAnnouncement(self, userID, messageID, userAnnounecement, photoID):
+        sqlInsert = "INSERT INTO request_table (userID, messageID, userRequest, photoID) VALUES (%s, %s, %s, %s)"
+        sqlInsertValue = (userID, messageID, userAnnounecement, photoID)
         self.dbCursor.execute(sqlInsert, sqlInsertValue)
         self.dataBase.commit()
         self.close()
