@@ -1,6 +1,6 @@
 from telebot.types import Message
 
-from keyboards.general import main_keyboard, all_chanels_markup
+from keyboards import main_keyboard, all_chanels_markup
 from misc.announcements_method import send_announcement
 from dispatcher import bot, db
 from i18n import START_MESSAGE

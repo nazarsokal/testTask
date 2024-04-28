@@ -1,7 +1,7 @@
 from telebot.types import Message, CallbackQuery
 
 import config
-from keyboards.general import clear_keyboard, main_keyboard, announcement_confirm_markup
+from keyboards import clear_keyboard, main_keyboard, announcement_confirm_markup
 from misc.announcements_method import format_announcements_block, send_announcement
 from states.general import NewAnnouncementState
 from dispatcher import bot, db
@@ -47,7 +47,7 @@ async def get_photo(message: Message):
         await send_announcement(bot, message.chat.id, data)
             
         await bot.set_state(message.from_user.id, NewAnnouncementState.confirm, message.chat.id)
-        await bot.send_message(message.chat.id, 'Що робити з публікацею?', reply_markup=announcement_confirm_markup())
+        await bot.send_message(message.chat.id, 'Що робити з публікацією?', reply_markup=announcement_confirm_markup())
         
     
 @bot.callback_query_handler(state=NewAnnouncementState.confirm, func=lambda callback: callback.data == "announcement_confirm")
