@@ -1,5 +1,6 @@
 from telebot.types import Message, CallbackQuery
 
+import config
 from keyboards.general import clear_keyboard, main_keyboard, announcement_confirm_markup
 from misc.announcements_method import format_announcements_block, send_announcement
 from states.general import NewAnnouncementState
@@ -53,16 +54,17 @@ async def get_photo(message: Message):
 @bot.callback_query_handler(state=NewAnnouncementState.confirm, func=lambda callback: callback.data == "announcement_confirm")
 async def callbackMessage(callback: CallbackQuery):
     async with bot.retrieve_data(callback.from_user.id, callback.from_user.id) as data:     
-        post = await send_announcement(bot, callback.message.chat.id, data)
+        post = await send_announcement(bot, config.ANNOUNCEMENT_CHANNEL_ID, data)
 
         db.writeUserAnnouncement(callback.from_user.id,
-                                 post.chat.id,
+                                 post.id,
                                  data['title'],
                                  data['body'],
                                  data['photo']
                                  )
-            
-        await bot.send_message(callback.from_user.id, "Оголошення успішно відправлено на канал")
+        
+        await bot.send_message(callback.from_user.id, "Оголошення успішно відправлено на канал", reply_markup=main_keyboard())
+        await bot.answer_callback_query(callback.id)
 
 
 @bot.callback_query_handler(state=NewAnnouncementState.confirm, func=lambda callback: callback.data == "announcement_cancle")

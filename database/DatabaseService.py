@@ -37,7 +37,7 @@ class DatabaseServiceClass:
             val = (user.id, user.username, user.first_name, user.last_name)
             self.dbCursor.execute(sqlInsert, val)
             self.dataBase.commit()
-            self.close()
+            # self.close()
 
     def writeUserAnnouncement(self, userID: int,
                               messageID: int,
@@ -45,26 +45,42 @@ class DatabaseServiceClass:
                               userAnnounecementBody: str,
                               photoID: str | None):
         self.dbCursor.execute("CREATE TABLE IF NOT EXISTS announcement_table (userID VARCHAR(255), messageID VARCHAR(255), userAnnouncementTitle VARCHAR(255), userAnnouncementBody TEXT, photoID VARCHAR(255), isClosed TINYINT(1) DEFAULT '0')")
-        sqlInsert = "INSERT INTO announcement_table (userID, messageID, userAnnouncementTitle ,userAnnouncementBody, photoID, isClosed) VALUES (%s, %s, %s, %s, %s)"
+        sqlInsert = "INSERT INTO announcement_table (userID, messageID, userAnnouncementTitle ,userAnnouncementBody, photoID, isClosed) VALUES (%s, %s, %s, %s, %s, %s)"
         sqlInsertValue = (userID, messageID, userAnnounecementTitle, userAnnounecementBody, photoID, False)
         self.dbCursor.execute(sqlInsert, sqlInsertValue)
         self.dataBase.commit()
-        self.close()
+        # self.close()
     
     def get_user_requests(self, userID) -> list[dict]:
-        sqlSelectAnnouncement = "SELECT * FROM announcement_table WHERE userID = %s"
+        sqlSelectAnnouncement = "SELECT userID, messageID, userAnnouncementTitle ,userAnnouncementBody, photoID, isClosed FROM announcement_table WHERE userID = %s"
         sqlVal = (userID, )
         self.dbCursor.execute(sqlSelectAnnouncement, sqlVal)
         selectAnnResult = self.dbCursor.fetchall()
-        self.close()
+        result = [{
+            "userID":dt[0],
+            "messageID":dt[1],
+            "title": dt[2],
+            "body":dt[3],
+            "photo":dt[4],
+            "isClosed":dt[5],
+        } for dt in selectAnnResult]
+        # self.close()
+        return result
+    
+    def get_Title_Body(self, userID) -> list[dict]:
+        sqlSelectAnnouncement = "SELECT userAnnouncementTitle, userAnnouncementBody, photoID FROM announcement_table WHERE messageID = %s"
+        sqlVal = (userID, )
+        self.dbCursor.execute(sqlSelectAnnouncement, sqlVal)
+        selectAnnResult = self.dbCursor.fetchall()
+        # self.close()
         return selectAnnResult
     
-    def get_Title_Body(self) -> list[dict]:
-        sqlSelectAnnouncement = "SELECT userAnnouncementTitle, userAnnouncementBody FROM announcement_table WHERE userID = %s"
-        self.dbCursor.execute(sqlSelectAnnouncement)
-        selectAnnResult = self.dbCursor.fetchall()
-        self.close()
-        return selectAnnResult
+    def closeFundraisng(self, userID, booleanStatement: bool):
+        sqlUpdate = "UPDATE announcement_table SET isClosed = %s WHERE messageID = %s"
+        sqlVal = (booleanStatement, userID)
+        self.dbCursor.execute(sqlUpdate, sqlVal)
+        self.dataBase.commit()
+        # self.close()
     
 
     def close(self):

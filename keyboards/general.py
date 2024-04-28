@@ -33,9 +33,8 @@ def all_chanels_markup():
     return markup
 
 def close_open_announcement_markup(request: dict):
-    qwery = f"{request['userID']}.{request}"
+    qwery = f"close-open.{request['userID']}.{request['messageID']}." + ('open' if request['isClosed'] else 'close')
     text = 'Відновити' if request['isClosed'] else 'Закрити'
-    
     markup = InlineKeyboardMarkup()
     btn1 =  InlineKeyboardButton(text, callback_data=qwery)
     markup.add(btn1)

@@ -19,14 +19,10 @@ async def cancel(message: Message):
     await bot.send_message(message.chat.id, "Дія була припинена",
                        reply_markup=main_keyboard())
             
-    
 
 @bot.message_handler(text = "Підтримка 💁‍♂️")
 async def help_message(message: Message):
-    
     await bot.send_message(message.chat.id,"Корисні посилання:", reply_markup=all_chanels_markup())
 
-    
-    
 
 #купіть слона

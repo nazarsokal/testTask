@@ -1,6 +1,7 @@
 from telebot.async_telebot import AsyncTeleBot
 from telebot.types import Message
 
+
 from i18n import (NEW_ANNOUNCEMENTT_BLOCK,
                  NEW_ANNOUNCEMENTT_BLOCK_MISSING as NABM, 
                  NEW_ANNOUNCEMENTT_BLOCK_CURRENT as NABC,
@@ -25,8 +26,11 @@ def format_announcements_block(fsm_data: dict | None, current_state: int):
     )
     return text
 
-async def send_announcement(bot: AsyncTeleBot, chat_id: int, data: dict, **kwargs) -> Message:
-    text = f"<b>{data['title']}</b>\n<i>{data['body']}</i>"
+def make_announcement_text(data: dict):
+    return f"<b>{data['title']}</b>\n<i>{data['body']}</i>"
+
+async def send_announcement(bot: AsyncTeleBot, chat_id: int | str, data: dict, **kwargs) -> Message:
+    text = make_announcement_text(data)
     if data['photo']:
         message = await bot.send_photo(chat_id, data['photo'], text, **kwargs)
     else:
