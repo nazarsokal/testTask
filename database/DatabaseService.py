@@ -27,6 +27,7 @@ class DatabaseServiceClass:
 
 
     def writeUser(self, user : User):
+        self.dbCursor.execute("CREATE TABLE IF NOT EXISTS users_list (userId VARCHAR(255), userNickName VARCHAR(255), userFirstName VARCHAR(255), userLastName VARCHAR(255))")
         sqlSelect = "SELECT * FROM users_list WHERE userID = %s"
         sqlVal = (str(user.id), )
         self.dbCursor.execute(sqlSelect, sqlVal)
@@ -43,6 +44,7 @@ class DatabaseServiceClass:
                               userAnnounecementTitle: str,
                               userAnnounecementBody: str,
                               photoID: str | None):
+        self.dbCursor.execute("CREATE TABLE IF NOT EXISTS announcement_table (userId VARCHAR(255), messageID VARCHAR(255), userAnnouncementTitle VARCHAR(255), userAnnouncementTitle TEXT, photoID VARCHAR(255), isClosed TINYINT(1) DEFAULT '0')")
         sqlInsert = "INSERT INTO announcement_table (userID, messageID, userAnnouncementTitle ,userAnnouncementBody, photoID, isClosed) VALUES (%s, %s, %s, %s, %s)"
         sqlInsertValue = (userID, messageID, userAnnounecementTitle, userAnnounecementBody, photoID, False)
         self.dbCursor.execute(sqlInsert, sqlInsertValue)
@@ -51,7 +53,7 @@ class DatabaseServiceClass:
     
     def get_user_requests(self, userID):
         sqlSelectAnnouncement = "SELECT * FROM announcement_table WHERE userID = %s"
-        sqlVal = (userID)
+        sqlVal = (userID, )
         self.dbCursor.execute(sqlSelectAnnouncement, sqlVal)
         selectAnnResult = self.dbCursor.fetchall()
         self.close()
