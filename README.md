@@ -2,6 +2,24 @@
 
 ## Quick Start
 
+Clone repo
+
+```
+git clone https://github.com/nazarsokal/testTask.git
+```
+
+Install dependencies
+
+```
+pip install -r requirements.txt
+```
+
+You can edit `config/config.ini` file but we recommend using our telegram channels and bots
+
+https://t.me/kpktaskbot
+
+https://t.me/KRKtest
+
 
 
 ## Project guide
