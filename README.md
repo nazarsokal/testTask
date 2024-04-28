@@ -6,6 +6,7 @@ Clone repo
 
 ```
 git clone https://github.com/nazarsokal/testTask.git
+cd testTask
 ```
 
 Install dependencies
@@ -20,7 +21,11 @@ https://t.me/kpktaskbot
 
 https://t.me/KRKtest
 
+And finally start the bot
 
+```
+python main.py
+```
 
 ## Project Description (It also pinned in main chanel)
 
