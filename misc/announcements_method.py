@@ -10,14 +10,14 @@ def format_announcements_block(fsm_data: dict | None, current_state: int):
     
     data = [
         fsm_data.get('title', NABM),
-        fsm_data.get('description', NABM),
+        fsm_data.get('body', NABM),
         (NABM, NABP)[fsm_data.get('photo', False)] 
     ]
     data[current_state] = NABC
     
     text = NEW_ANNOUNCEMENTT_BLOCK.format(
         title=data[0],
-        description=data[1],
+        body=data[1],
         photo=data[2]
     )
     return text
